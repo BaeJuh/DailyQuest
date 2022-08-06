@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 public class QuestActivity extends AppCompatActivity {
 
-    Button addButton;
-    LinearLayout container;
+    private Button addButton;
+    private LinearLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +27,21 @@ public class QuestActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                addSchedule();
+            }
+        });
+    }
 
-                inflater.inflate(R.layout.activity_schedule, container, true);
+    public void addSchedule() {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                Toast.makeText(getApplicationContext(), "일정 추가", Toast.LENGTH_SHORT).show();
+        inflater.inflate(R.layout.activity_schedule, container, true);
+        Button btn = container.findViewById(R.id.btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn.setText("check");
             }
         });
     }
