@@ -20,6 +20,8 @@ public class QuestActivity extends AppCompatActivity {
     private Button addButton;
     private ListView container;
 
+    ScheduleAdapter adapter = new ScheduleAdapter();
+
     int i=10;
 
     @Override
@@ -29,21 +31,23 @@ public class QuestActivity extends AppCompatActivity {
 
         addButton = (Button) findViewById(R.id.addButton);
         container = (ListView) findViewById(R.id.schedule);
-        ScheduleAdapter adapter = new ScheduleAdapter();
+
         container.setAdapter(adapter);
 
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.addItem("제목", i, i);
-                adapter.notifyDataSetChanged();
+                addSchedule();
+
 
             }
         });
     }
 
     public void addSchedule() {
-
+        adapter.addItem("제목", i, i);
+        adapter.notifyDataSetChanged();
     }
+
 }
