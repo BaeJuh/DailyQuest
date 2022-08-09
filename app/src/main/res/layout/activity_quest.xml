@@ -7,23 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".QuestActivity">
 
-    <ScrollView
+    <ListView
+        android:id="@+id/schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <LinearLayout
-            android:id="@+id/schedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </ScrollView>
+        android:layout_height="match_parent"/>
 
     <Button
         android:id="@+id/addButton"

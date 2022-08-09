@@ -7,42 +7,43 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class QuestActivity extends AppCompatActivity {
 
     private Button addButton;
-    private LinearLayout container;
+    private ListView container;
+
+    int i=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
 
-        addButton = findViewById(R.id.addButton);
-        container = findViewById(R.id.schedule);
+        addButton = (Button) findViewById(R.id.addButton);
+        container = (ListView) findViewById(R.id.schedule);
+        ScheduleAdapter adapter = new ScheduleAdapter();
+        container.setAdapter(adapter);
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addSchedule();
+                adapter.addItem("제목", i, i);
+                adapter.notifyDataSetChanged();
+
             }
         });
     }
 
     public void addSchedule() {
-        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.activity_schedule, container, true);
-        Button btn = container.findViewById(R.id.btn);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn.setText("check");
-            }
-        });
     }
 }
