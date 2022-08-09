@@ -40,7 +40,6 @@ public class QuestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 addSchedule();
 
-
             }
         });
     }
