@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -64,6 +65,14 @@ public class ScheduleAdapter extends BaseAdapter {
         titleTextView.setText(scheduleItem.getTitle());
         hourTextView.setText(scheduleItem.getHour() + "");
         minuteTextView.setText(scheduleItem.getMinute() + "");
+
+        Button Go = (Button) view.findViewById(R.id.Go);
+        Go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Go.setText("Chk");
+            }
+        });
 
         return view;
     }
