@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,10 +28,12 @@ public class QuestActivity extends AppCompatActivity {
     private EditText Edit_schedule;
     private EditText Edit_hour;
     private EditText Edit_minute;
+    private TextView caution;
 
     String s = "";
     int h = 0;
     int m = 0;
+    boolean isNum = true;
 
     ScheduleAdapter adapter = new ScheduleAdapter();
 
@@ -63,20 +66,30 @@ public class QuestActivity extends AppCompatActivity {
         Edit_schedule=(EditText) dialog.findViewById(R.id.Edit_schedule);
         Edit_hour=(EditText) dialog.findViewById(R.id.Edit_hour);
         Edit_minute=(EditText) dialog.findViewById(R.id.Edit_minute);
-
-
+        caution=(TextView) dialog.findViewById(R.id.caution);
 
         AlertDialog.Builder dig = new AlertDialog.Builder(QuestActivity.this);
         dig.setTitle("시간 입력");
         dig.setView(dialog);
+
+        if (!isNum) {
+            caution.setText("숫자를 제대로 입력하세요.");
+        }
+
         dig.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 s = Edit_schedule.getText().toString();
-                h = Integer.parseInt(String.valueOf(Edit_hour.getText()));
-                m = Integer.parseInt(String.valueOf(Edit_minute.getText()));
 
-                addSchedule(s, h, m);
+                try {
+                    h = Integer.parseInt(Edit_hour.getText().toString().trim());
+                    m = Integer.parseInt(Edit_minute.getText().toString().trim());
+                    addSchedule(s, h, m);
+                    isNum = true;
+                } catch (NumberFormatException e) {
+                    isNum = false;
+                    show_dialog();
+                }
             }
         });
 
