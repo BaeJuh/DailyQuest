@@ -56,7 +56,7 @@ public class QuestActivity extends AppCompatActivity {
         });
     }
 
-    public void addSchedule(String s ,int h, int m) {
+    public void addSchedule(String s ,int h, int m) { /** item 추가 */
         adapter.addItem(s, h, m);
         adapter.notifyDataSetChanged();
     }
