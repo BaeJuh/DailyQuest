@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ScheduleAdapter extends BaseAdapter {
     private TextView titleTextView;
@@ -70,22 +72,73 @@ public class ScheduleAdapter extends BaseAdapter {
         timerMinute = scheduleItem.getMinute();
 
         titleTextView.setText(scheduleItem.getTitle());
-        hourTextView.setText(timerHour + "");
-        minuteTextView.setText(timerMinute + "");
 
+        if (timerHour < 10) {
+            hourTextView.setText("0" + timerHour);
+        } else {
+            hourTextView.setText(timerHour + "");
+        }
+        if (timerMinute < 10) {
+            minuteTextView.setText("0" + timerMinute);
+        } else {
+            minuteTextView.setText(timerMinute + "");
+        }
 
         Button Go = (Button) view.findViewById(R.id.Go);
-        Go.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timerMinute--;
-                timerHour--;
 
-                hourTextView.setText(timerHour + "");
-                minuteTextView.setText(timerMinute + "");
+        if (isTimerStart == false) {
+            Go.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Timer timer = new Timer();
+                    TimerTask timerTask;
+                    isTimerStart = true;
 
-                /* 타이머는 get(i)를 해서 내용물을 직접 가져와서 수정하는 형식으로 함
-                * */
+                    Go.setText(" Running ");
+
+                    timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (timerMinute > 0) {
+                                timerMinute --;
+                            }
+                            if (timerHour != 0 && timerMinute == 0) {
+                                timerHour --;
+                                timerMinute = 59;
+
+                            }
+
+                            hourTextView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (timerMinute < 10) {
+                                        minuteTextView.setText("0" + timerMinute);
+                                    } else {
+                                        minuteTextView.setText(timerMinute + "");
+                                    }
+                                }
+                            });
+
+                            minuteTextView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (timerHour < 10) {
+                                        hourTextView.setText("0" + timerHour);
+                                    } else {
+                                        hourTextView.setText(timerHour + "");
+                                    }
+                                }
+                            });
+
+                            if (timerHour == 0 && timerMinute == 0) {
+                                timer.cancel();
+                            }
+                        } // run
+                    };
+                    timer.schedule(timerTask, 1000, 1000);
+
+                    /* 타이머는 get(i)를 해서 내용물을 직접 가져와서 수정하는 형식으로 함
+                     * */
 
                 /* 타이머가 끝나면 timerHour, timerMinute 를 items.set(i, item)
                 * ScheduleItem timerApplyItem = new ScheduleItem();
@@ -95,9 +148,10 @@ public class ScheduleAdapter extends BaseAdapter {
                 * 으로 값 수정
                 *  */
 
-            }
-        });
-
+                }
+            });
+        }
         return view;
     }
 }
+
